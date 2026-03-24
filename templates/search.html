@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Поиск{% endblock %}
+
+{% block content %}
+<h1>Поиск</h1>
+
+<div class="card">
+    <form action="/results" method="get">
+
+        <div class="form-group">
+            <label for="query">Поисковый запрос</label>
+            <input type="text" id="query" name="query"
+                   placeholder="Например: любовь осень грусть"
+                   value="{{ request.args.get('query', '') }}"
+                   required autofocus>
+        </div>
+
+        <div class="form-group">
+            <label for="index_type">Тип индекса</label>
+            <select id="index_type" name="index_type">
+                {% for key, label in index_options %}
+                <option value="{{ key }}"
+                    {% if key not in available %}disabled{% endif %}
+                    {% if request.args.get('index_type', 'bm25_dict') == key %}selected{% endif %}>
+                    {{ label }}{% if key not in available %} (не загружен){% endif %}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group" style="max-width:160px;">
+            <label for="top_k">Количество результатов</label>
+            <input type="number" id="top_k" name="top_k"
+                   min="1" max="50"
+                   value="{{ request.args.get('top_k', 10) }}">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Найти</button>
+    </form>
+</div>
+
+<p style="font-size:.83rem; color:#888; margin-top:4px;">
+    Загруженные индексы: <strong>{{ available | join(", ") }}</strong>.
+    Для других индексов перезапустите сервер с нужным <code>--indexes</code>.
+</p>
+{% endblock %}

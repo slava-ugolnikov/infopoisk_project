@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Поиск по корпусу — Главная{% endblock %}
+
+{% block content %}
+<div style="text-align:center; padding: 36px 0 28px;">
+    <h1 style="font-size:2.4rem; margin-bottom:14px;">Поиск по корпусу текстов</h1>
+    <p style="font-size:1.05rem; color:#555; max-width:540px; margin:0 auto 28px;">
+        Лексический и семантический поиск по русскоязычному поэтическому корпусу.
+        Шесть вариантов индексирования.
+    </p>
+    <a href="/search" class="btn btn-primary" style="font-size:1rem; padding:12px 34px;">
+        Перейти к поиску →
+    </a>
+</div>
+
+<div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-bottom:20px;">
+    <div class="card" style="text-align:center;">
+        <h2 style="font-size:1rem;">TF-IDF</h2>
+        <p style="font-size:.85rem;">Два варианта: через словари и через матрицы scipy.</p>
+        <span class="tag">freq_dict</span><span class="tag">freq_matrix</span>
+    </div>
+    <div class="card" style="text-align:center;">
+        <h2 style="font-size:1rem;">BM-25</h2>
+        <p style="font-size:.85rem;">Два варианта: через словари и через матрицы scipy.</p>
+        <span class="tag">bm25_dict</span><span class="tag">bm25_matrix</span>
+    </div>
+    <div class="card" style="text-align:center;">
+        <h2 style="font-size:1rem;">Word2Vec</h2>
+        <p style="font-size:.85rem;">Обучается на корпусе через gensim. Косинусное сходство.</p>
+        <span class="tag">word2vec</span>
+    </div>
+</div>
+
+<div class="card" style="display:flex; gap:24px; align-items:flex-start;">
+    <div>
+        <h2 style="margin-bottom:6px;">Navec</h2>
+        <p style="font-size:.88rem; margin-bottom:4px;">
+            Предобученные русскоязычные векторы от проекта
+            <a href="https://github.com/natasha/navec" target="_blank">Natasha</a>.
+            Нужен файл <code>.tar</code> (~50 MB).
+        </p>
+        <span class="tag">navec</span>
+    </div>
+</div>
+
+<div class="card">
+    <h2>О корпусе</h2>
+    <p>
+        Русскоязычные поэтические тексты (~16 000 записей, используется выборка 1 500).
+        Поля: автор, название, текст, даты, тематические теги.
+    </p>
+    <p>
+        Предобработка: очистка от пунктуации → токенизация → удаление стоп-слов →
+        лемматизация (pymorphy3).
+    </p>
+</div>
+{% endblock %}

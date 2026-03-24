@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Результаты: {{ query }}{% endblock %}
+
+{% block extra_style %}
+<style>
+    .stats-bar {
+        background: #16213e; color: #c8c6df;
+        border-radius: 8px; padding: 11px 20px;
+        display: flex; gap: 26px; flex-wrap: wrap;
+        margin-bottom: 22px; font-size: .88rem;
+    }
+    .stats-bar strong { color: #fff; }
+
+    .result-card {
+        background: #fff; border-radius: 8px;
+        padding: 16px 20px; margin-bottom: 12px;
+        box-shadow: 0 1px 6px rgba(0,0,0,.06);
+        border-left: 4px solid #4a3f8f;
+    }
+    .result-meta {
+        font-size: .8rem; color: #888;
+        display: flex; gap: 12px; flex-wrap: wrap;
+        margin-bottom: 6px;
+    }
+    .result-author { font-weight: 600; color: #555; }
+    .score-pill {
+        background: #edeaff; color: #4a3f8f;
+        padding: 1px 8px; border-radius: 12px;
+        font-size: .76rem; font-weight: 700;
+    }
+    .result-text {
+        font-size: .9rem; line-height: 1.6;
+        color: #333; white-space: pre-wrap;
+    }
+    .no-results {
+        text-align: center; padding: 44px 0;
+        color: #888; font-size: 1rem;
+    }
+    .back-link {
+        display: inline-block; margin-bottom: 20px;
+        color: #4a3f8f; text-decoration: none;
+        font-size: .88rem; font-weight: 600;
+    }
+    .back-link:hover { text-decoration: underline; }
+</style>
+{% endblock %}
+
+{% block content %}
+<a class="back-link" href="/search">← Новый поиск</a>
+
+<h1 style="margin-bottom:16px;">
+    Результаты по запросу
+    <span style="color:#4a3f8f;">«{{ query }}»</span>
+</h1>
+
+{% if error %}
+    <div class="error-box">{{ error }}</div>
+{% else %}
+
+<div class="stats-bar">
+    <span>Индекс: <strong>{{ index_label }}</strong></span>
+    <span>Найдено: <strong>{{ results | length }}</strong></span>
+    <span>Время поиска: <strong>{{ elapsed_ms }} мс</strong></span>
+</div>
+
+{% if results %}
+    {% for r in results %}
+    <div class="result-card">
+        <div class="result-meta">
+            <span><strong>#{{ r.rank }}</strong></span>
+            {% if r.author %}<span class="result-author">{{ r.author }}</span>{% endif %}
+            {% if r.title %}<span>«{{ r.title }}»</span>{% endif %}
+            <span>orig_id={{ r.original_id }}</span>
+            <span class="score-pill">score {{ r.score }}</span>
+        </div>
+        <div class="result-text">{{ r.text[:380] }}{% if r.text | length > 380 %}…{% endif %}</div>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="no-results">
+        По запросу <strong>«{{ query }}»</strong> ничего не найдено.<br>
+        Попробуйте другие слова или другой тип индекса.
+    </div>
+{% endif %}
+
+{% endif %}
+{% endblock %}

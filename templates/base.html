@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Поиск по корпусу{% endblock %}</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #f4f3ef;
+            color: #222;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /*Шапка*/
+        header {
+            background: #16213e;
+            color: #ddd;
+            padding: 14px 36px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo { font-size: 1.1rem; font-weight: 700; color: #eee;
+                text-decoration: none; letter-spacing: .04em; }
+        nav a { color: #9b99bc; text-decoration: none; margin-left: 22px;
+                font-size: .9rem; transition: color .2s; }
+        nav a:hover { color: #fff; }
+
+        /*Контент*/
+        main { max-width: 860px; margin: 44px auto; padding: 0 20px;
+               flex: 1; width: 100%; }
+
+        h1 { font-size: 1.9rem; color: #16213e; margin-bottom: 14px; }
+        h2 { font-size: 1.25rem; color: #16213e; margin-bottom: 12px; }
+        p  { line-height: 1.65; color: #444; margin-bottom: 10px; }
+
+        /*Карточки*/
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 26px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.07);
+            margin-bottom: 20px;
+        }
+
+        /*Кнопки*/
+        .btn {
+            display: inline-block;
+            padding: 10px 26px;
+            border-radius: 6px;
+            font-size: .95rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: background .2s, transform .1s;
+        }
+        .btn-primary { background: #4a3f8f; color: #fff; }
+        .btn-primary:hover { background: #3a2f7f; transform: translateY(-1px); }
+
+        /*Формы*/
+        .form-group { margin-bottom: 18px; }
+        label { display: block; font-weight: 600; margin-bottom: 6px;
+                font-size: .88rem; color: #333; }
+        input[type="text"], select, input[type="number"] {
+            width: 100%; padding: 10px 13px;
+            border: 1.5px solid #ccc; border-radius: 6px;
+            font-size: .95rem; background: #fff;
+            transition: border-color .2s;
+        }
+        input:focus, select:focus { outline: none; border-color: #4a3f8f; }
+
+        /*Прочее*/
+        .tag {
+            display: inline-block; padding: 2px 9px;
+            border-radius: 20px; font-size: .78rem; font-weight: 600;
+            background: #edeaff; color: #4a3f8f; margin-right: 4px;
+        }
+        .error-box {
+            background: #fff3f3; border: 1.5px solid #f5aaaa;
+            border-radius: 8px; padding: 13px 17px; color: #a33;
+            margin-bottom: 18px;
+        }
+        code {
+            background: #f0eeff; padding: 1px 5px;
+            border-radius: 4px; font-size: .88em;
+        }
+        footer {
+            text-align: center; padding: 24px;
+            color: #aaa; font-size: .8rem;
+        }
+    </style>
+    {% block extra_style %}{% endblock %}
+</head>
+<body>
+<header>
+    <a class="logo" href="/">Корпусный поиск</a>
+    <nav>
+        <a href="/">Главная</a>
+        <a href="/search">Поиск</a>
+    </nav>
+</header>
+
+<main>{% block content %}{% endblock %}</main>
+
+<footer>Проект — Информационный поиск</footer>
+</body>
+</html>
